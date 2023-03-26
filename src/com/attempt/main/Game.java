@@ -80,6 +80,7 @@ public class Game extends Canvas implements Runnable{
         	lastTime = now;
         	while(delta >=1) {
         		tick();
+				// tick(delta);  //MEJORA FUTURA PARA Q NO SEAN RELEVANTES LOS FPS
         		delta--;
         	}
         	if(running) {
@@ -98,7 +99,7 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick() {
 		handler.tick();
-		hud.tick();
+		HUD.tick();
 		if (HUD.vida1<=0) {
 		//	HUD.points+=1;
 		//} else {

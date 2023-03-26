@@ -3,6 +3,7 @@ package com.attempt.main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.Window;
 
 public class TankEnemy extends Tank{
 	
@@ -19,6 +20,7 @@ public class TankEnemy extends Tank{
 	@Override
 	public void tick() {
 		direction+=getRotatSpeed();
+		direccion.rotateBy(getRotatSpeed());
 		if(turnos==0) {
 			if (calcSp33dAI()){
 				turnos=20;
@@ -26,13 +28,15 @@ public class TankEnemy extends Tank{
 				//aim();
 				//System.out.println("Direction (after): "+direction);
 				this.rotatSpeed=0;
-				sp33d=0;
+				velocidadNeta=0;
 			}
 		} else {
 			turnos--;
 		}
-		velocX=(int)(sp33d*(Math.cos(getDir())));
-		velocY=(int)(sp33d*(Math.sin(getDir())));
+		// velocX=(int)(velocidadNeta*(Math.cos(getDir())));
+		// velocY=(int)(velocidadNeta*(Math.sin(getDir())));
+		velocX=(int)(velocidadNeta*direccion.x);
+		velocY=(int)(velocidadNeta*direccion.y);
 		//System.out.println("VX="+velocX+" VY="+velocY);
 		x+=velocX;
 		y+=velocY;
@@ -75,11 +79,20 @@ public class TankEnemy extends Tank{
 		
 	}
 	
+	public Vector2D getPerpendicularDirection(GameObject o) {
+		// double x = o.getVelocY();
+		// double y = -o.getVelocX();
+		// Vector2D result=new Vector2D(x, y);
+		Vector2D result=o.direccion.getPerp();
+
+		if (this.x+result.x*5<0 || this.x+result.x*5>Game.ancho || this.y+result.y*5<0 || this.y+result.y*5>Game.alto ){
+			result.rotateBy(90);
+		}
+
+		return result;
+	}
 
 	private double calcularPerpendicularA(GameObject o){
-
-		//calculate the perpendicular direction to GameObjetc o's direction
-		
 
 		if(o.getVelocX()==0) {
 			if(o.getVelocY()>0) {
@@ -120,7 +133,7 @@ public class TankEnemy extends Tank{
 		}
 		//if(this.rotatSpeed==0) {
 			System.out.println("moving");
-			this.sp33d=5;
+			this.velocidadNeta=5;
 		//}
 	}
 
@@ -149,7 +162,7 @@ public class TankEnemy extends Tank{
 				wantedDir=0.75*Math.PI;
 			}
 		} else {
-			sp33d=0;
+			velocidadNeta=0;
 		}
 		
 		if((this.direction)!=wantedDir) {
@@ -159,7 +172,7 @@ public class TankEnemy extends Tank{
 			} else {
 				this.rotatSpeed=-0.15*Math.PI;
 			}
-			this.sp33d=5;
+			this.velocidadNeta=5;
 			System.out.println("DIRECTION: "+this.direction);
 			System.out.println("Wanted Dir: "+wantedDir);
 			return true;
@@ -172,7 +185,8 @@ public class TankEnemy extends Tank{
 					Rectangle rect=new Rectangle(o.getX()+o.getVelocX()*n,o.getY()+o.getVelocY()*n,16,16);
 					if ( rect.intersects(this.getBounds()) ){ //y me chocará
 						
-						wantedDir=calcularPerpendicularA(o);
+						// wantedDir=calcularPerpendicularA(o);
+						wantedDir=getPerpendicularDirection(o).getAngle();
 						
 						rotateAway();
 

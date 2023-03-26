@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class KeyInput extends KeyAdapter{
 	
 	private Handler handler=new Handler();
-	private int sp33d=5;
+	private int velocidadNeta=5;
 	
 	private boolean uP = false;
 	private boolean dP = false;
@@ -30,21 +30,23 @@ public class KeyInput extends KeyAdapter{
 			if(aux.id==ID.Player) {
 				if(key==87) {
 					uP = true;
-					handler.getObjects().get(i).setVelocY(-sp33d);
+					handler.getObjects().get(i).setVelocY(-velocidadNeta);
 				} else if(key==65) {
 					lP = true;
-					handler.getObjects().get(i).setVelocX(-sp33d);
+					handler.getObjects().get(i).setVelocX(-velocidadNeta);
 				} else if(key==68) {
 					rP = true;
-					handler.getObjects().get(i).setVelocX(sp33d);
+					handler.getObjects().get(i).setVelocX(velocidadNeta);
 				} else if(key==83) {
 					dP = true;
-					handler.getObjects().get(i).setVelocY(sp33d);
+					handler.getObjects().get(i).setVelocY(velocidadNeta);
 				}
 			} else if(aux.id==ID.Tank1) {
 				if(key==77) {
-					int velocXB=(int)(4*(Math.cos(((Tank)aux).getDir())));
-					int velocYB=(int)(4*(Math.sin(((Tank)aux).getDir())));
+					// int velocXB=(int)(4*(Math.cos(((Tank)aux).getDir())));
+					// int velocYB=(int)(4*(Math.sin(((Tank)aux).getDir())));
+					int velocXB=(int)(4*aux.direccion.x);
+					int velocYB=(int)(4*aux.direccion.y);
 					
 					
 					//TIMER
@@ -61,7 +63,7 @@ public class KeyInput extends KeyAdapter{
                     }else if(lP){
                     	((Tank)aux).setRotatSpeed(-0.02*Math.PI);
                     }
-					((Tank)aux).setSp33d(sp33d);
+					((Tank)aux).setSp33d(velocidadNeta);
 				} else if(key==37) {
 					lP = true;
 					((Tank)aux).setRotatSpeed(-0.02*Math.PI);
@@ -76,16 +78,18 @@ public class KeyInput extends KeyAdapter{
                     	((Tank)aux).setRotatSpeed(-0.02*Math.PI);
                     }
 					/* REVISAR!!
-					((Tank)aux).setSp33d(-sp33d);
-					((Tank)aux).setVelocX((int)(sp33d*(Math.cos(((Tank)aux).getDir()+Math.PI))));
-					((Tank)aux).setVelocY((int)(sp33d*(Math.sin(((Tank)aux).getDir()+Math.PI))));
+					((Tank)aux).setSp33d(-velocidadNeta);
+					((Tank)aux).setVelocX((int)(velocidadNeta*(Math.cos(((Tank)aux).getDir()+Math.PI))));
+					((Tank)aux).setVelocY((int)(velocidadNeta*(Math.sin(((Tank)aux).getDir()+Math.PI))));
 					*/
 				}
 			} else if(aux.id==ID.Tank2) {
 				if(key==70) {
-					int velocXB=(int)(4*(Math.cos(((Tank)aux).getDir())));
-					int velocYB=(int)(4*(Math.sin(((Tank)aux).getDir())));
-					
+					// int velocXB=(int)(4*(Math.cos(((Tank)aux).getDir())));
+					// int velocYB=(int)(4*(Math.sin(((Tank)aux).getDir())));
+					int velocXB=(int)(4*aux.direccion.x);
+					int velocYB=(int)(4*aux.direccion.y);
+
 					//TIMER
 					if (((Tank)aux).getShotTimer()<=0) {
 						handler.objects.add(new BasicEnemy(aux.x+4+velocXB*2,aux.y+2+velocYB*2,velocXB,velocYB,ID.Bullet2,handler,16,16));
@@ -100,7 +104,7 @@ public class KeyInput extends KeyAdapter{
                     }else if(lP && !rP){
                     	((Tank)aux).setRotatSpeed(-0.02*Math.PI);
                     }
-					((Tank)aux).setSp33d(sp33d);
+					((Tank)aux).setSp33d(velocidadNeta);
 				} else if(key==65) {
 					lP = true;
 					((Tank)aux).setRotatSpeed(-0.02*Math.PI);
@@ -117,9 +121,9 @@ public class KeyInput extends KeyAdapter{
                     	((Tank)aux).setRotatSpeed(-0.02*Math.PI);
                     }
 					/* REVISAR!!
-					((Tank)aux).setSp33d(-sp33d);
-					((Tank)aux).setVelocX((int)(sp33d*(Math.cos(((Tank)aux).getDir()+Math.PI))));
-					((Tank)aux).setVelocY((int)(sp33d*(Math.sin(((Tank)aux).getDir()+Math.PI))));
+					((Tank)aux).setSp33d(-velocidadNeta);
+					((Tank)aux).setVelocX((int)(velocidadNeta*(Math.cos(((Tank)aux).getDir()+Math.PI))));
+					((Tank)aux).setVelocY((int)(velocidadNeta*(Math.sin(((Tank)aux).getDir()+Math.PI))));
 					*/
 				}
 			}
@@ -138,28 +142,28 @@ public class KeyInput extends KeyAdapter{
 				if(key==87) {
 					uP = false;
                     if(dP){
-                    	handler.getObjects().get(i).setVelocY(sp33d);
+                    	handler.getObjects().get(i).setVelocY(velocidadNeta);
                     }else {
                     	handler.getObjects().get(i).setVelocY(0);
                     }
 				} else if(key==65) {
 					lP = false;
                     if(rP){
-                    	handler.getObjects().get(i).setVelocX(sp33d);
+                    	handler.getObjects().get(i).setVelocX(velocidadNeta);
                     }else {
                     	handler.getObjects().get(i).setVelocX(0);
                     }
 				} else if(key==68) {
 					rP = false;
                     if(lP){
-                    	handler.getObjects().get(i).setVelocX(-sp33d);
+                    	handler.getObjects().get(i).setVelocX(-velocidadNeta);
                     }else {
                     	handler.getObjects().get(i).setVelocX(0);
                     }
 				} else if(key==83) {
 					dP = false;
                     if(uP){
-                    	handler.getObjects().get(i).setVelocY(-sp33d);
+                    	handler.getObjects().get(i).setVelocY(-velocidadNeta);
                     }else {
                     	handler.getObjects().get(i).setVelocY(0);
                     }
@@ -168,7 +172,7 @@ public class KeyInput extends KeyAdapter{
 				if(key==38) {
 					uP = false;
                     /*if(dP){
-                    	((Tank)aux).setSp33d(sp33d);
+                    	((Tank)aux).setSp33d(velocidadNeta);
                     }else {*/
                     	((Tank)aux).setSp33d(0);
                     //}
@@ -189,7 +193,7 @@ public class KeyInput extends KeyAdapter{
 				} else if(key==40) {
 					dP = false;
                     if(uP){
-                    	((Tank)aux).setSp33d(-sp33d);
+                    	((Tank)aux).setSp33d(-velocidadNeta);
                     }else {
                     	((Tank)aux).setSp33d(0);
                     }
@@ -198,7 +202,7 @@ public class KeyInput extends KeyAdapter{
 				if(key==87) {
 					uP = false;
                     /*if(dP){
-                    	((Tank)aux).setSp33d(sp33d);
+                    	((Tank)aux).setSp33d(velocidadNeta);
                     }else {*/
                     	((Tank)aux).setSp33d(0);
                     //}
@@ -219,7 +223,7 @@ public class KeyInput extends KeyAdapter{
 				} else if(key==83) {
 					dP = false;
                     if(uP){
-                    	((Tank)aux).setSp33d(-sp33d);
+                    	((Tank)aux).setSp33d(-velocidadNeta);
                     }else {
                     	((Tank)aux).setSp33d(0);
                     }

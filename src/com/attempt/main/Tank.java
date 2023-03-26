@@ -10,11 +10,6 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class Tank extends GameObject{
-	
-	protected double direction;
-	protected double rotatSpeed;
-	protected int sp33d;
-	protected Handler handler;
 	protected int shotTimer=0;
 	
 	public Tank(int x, int y, ID id,Handler handler,int ancho, int alto) {
@@ -24,10 +19,14 @@ public class Tank extends GameObject{
 
 	@Override
 	public void tick() {
+		direccion.rotateBy(getRotatSpeed());
 		direction+=getRotatSpeed();
-		//if (sp33d>=0) {
-		velocX=(int)(sp33d*(Math.cos(getDir())));
-		velocY=(int)(sp33d*(Math.sin(getDir())));
+		//if (velocidadNeta>=0) {
+		// velocX=(int)(velocidadNeta*(Math.cos(getDir())));
+		// velocY=(int)(velocidadNeta*(Math.sin(getDir())));
+		direccion.normalize();
+		velocX=(int)(velocidadNeta*direccion.x);
+		velocY=(int)(velocidadNeta*direccion.y);
 		//}//System.out.println("VX="+velocX+" VY="+velocY);
 		x+=velocX;
 		y+=velocY;
@@ -81,98 +80,105 @@ public class Tank extends GameObject{
 			//  \/ pi/2
 			//  <- pi
 			//  ^  1.5*pi
-			if(velocX==0 || velocY==0) {
-				if (velocX==0 && velocY==0) {
-					g2d.rotate(direction,centroX,centroY); //rotate (�ngulo, valor X del eje de rot,valor y de eje de rot)
-					g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-					g.drawImage(img, x, y, ancho, alto, null);
-					g2d.rotate(-direction,centroX,centroY);
-				}
-				if(velocX>0) { //Derecha
-					direction=0;
-					for (int i=velocX;i>0;i--) {
-						g.drawRect(x-i, y, ancho, alto);
-					}
-					g2d.rotate(direction,centroX,centroY);
-					g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-					g.drawImage(img, x, y, ancho, alto, null);
-					g2d.rotate(-direction,centroX,centroY);
-				} else
-				if(velocX<0) { //Izquierda
-					direction=Math.PI;
-					for (int i=velocX;i<0;i++) {
-						g.drawRect(x-i, y, ancho, alto);
-					}
-					g2d.rotate(direction,centroX,centroY);
-					g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-					g.drawImage(img, x, y, ancho, alto, null);
-					g2d.rotate(-direction,centroX,centroY);
-				}
-				if (velocY>0) { //abajo
-					direction=0.5*Math.PI;
-					for (int i=velocY;i>0;i--) {
-						g.drawRect(x, y-i, ancho, alto);
-					}
-					g2d.rotate(direction,centroX,centroY);
-					g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-					g.drawImage(img, x, y, ancho, alto, null);
-					g2d.rotate(-direction,centroX,centroY);
+			// if(velocX==0 || velocY==0) {
+			// 	if (velocX==0 && velocY==0) {
+			// 		g2d.rotate(direction,centroX,centroY); //rotate (�ngulo, valor X del eje de rot,valor y de eje de rot)
+			// 		g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 		g.drawImage(img, x, y, ancho, alto, null);
+			// 		g2d.rotate(-direction,centroX,centroY);
+			// 	}
+			// 	if(velocX>0) { //Derecha
+			// 		direction=0;
+			// 		for (int i=velocX;i>0;i--) {
+			// 			g.drawRect(x-i, y, ancho, alto);
+			// 		}
+			// 		g2d.rotate(direction,centroX,centroY);
+			// 		g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 		g.drawImage(img, x, y, ancho, alto, null);
+			// 		g2d.rotate(-direction,centroX,centroY);
+			// 	} else
+			// 	if(velocX<0) { //Izquierda
+			// 		direction=Math.PI;
+			// 		for (int i=velocX;i<0;i++) {
+			// 			g.drawRect(x-i, y, ancho, alto);
+			// 		}
+			// 		g2d.rotate(direction,centroX,centroY);
+			// 		g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 		g.drawImage(img, x, y, ancho, alto, null);
+			// 		g2d.rotate(-direction,centroX,centroY);
+			// 	}
+			// 	if (velocY>0) { //abajo
+			// 		direction=0.5*Math.PI;
+			// 		for (int i=velocY;i>0;i--) {
+			// 			g.drawRect(x, y-i, ancho, alto);
+			// 		}
+			// 		g2d.rotate(direction,centroX,centroY);
+			// 		g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 		g.drawImage(img, x, y, ancho, alto, null);
+			// 		g2d.rotate(-direction,centroX,centroY);
 					
-				} else
-				if (velocY<0) { //arriba
-					direction=1.5*Math.PI;
-					for (int i=velocY;i<0;i++) {
-						g.drawRect(x, y-i, ancho, alto);
-					}
-					g2d.rotate(direction,centroX,centroY);
-					g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-					g.drawImage(img, x, y, ancho, alto, null);
-					g2d.rotate(-direction,centroX,centroY);
-				}
-				} else{
-				if(velocX>0) {
-					if(velocY>0) { //derecha abajo
-						direction=0.25*Math.PI;
-						g2d.rotate(direction,centroX,centroY);
-						for (int i=velocX;i>0;i--) {
-							g.drawRect(x-i, y, ancho, alto);
-						}
-						g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-						g.drawImage(img, x, y, ancho, alto, null);
-						g2d.rotate(-direction,centroX,centroY);
-					} else { //derecha arriba
-						direction=1.75*Math.PI;
-						g2d.rotate(direction,centroX,centroY);
-						for (int i=velocX;i>0;i--) {
-							g.drawRect(x-i, y, ancho, alto);
-						}
-						g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-						g.drawImage(img, x, y, ancho, alto, null);
-						g2d.rotate(-direction,centroX,centroY);
-					}
-				} else
-				if(velocX<0) { //izquierda abajo
-					if(velocY>0) {
-						direction=0.75*Math.PI;
-						g2d.rotate(direction,centroX,centroY);
-						for (int i=velocX;i<0;i++) {
-							g.drawRect(x+i, y, ancho, alto);
-						}
-						g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-						g.drawImage(img, x, y, ancho, alto, null);
-						g2d.rotate(-direction,centroX,centroY);
-					} else { //izquierda arriba
-						direction=1.25*Math.PI;
-						g2d.rotate(direction,centroX,centroY);
-						for (int i=velocX;i<0;i++) {
-							g.drawRect(x+i, y, ancho, alto);
-						}
-						g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
-						g.drawImage(img, x, y, ancho, alto, null);
-						g2d.rotate(-direction,centroX,centroY);
-					}
-				}
-			}
+			// 	} else
+			// 	if (velocY<0) { //arriba
+			// 		direction=1.5*Math.PI;
+			// 		for (int i=velocY;i<0;i++) {
+			// 			g.drawRect(x, y-i, ancho, alto);
+			// 		}
+			// 		g2d.rotate(direction,centroX,centroY);
+			// 		g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 		g.drawImage(img, x, y, ancho, alto, null);
+			// 		g2d.rotate(-direction,centroX,centroY);
+			// 	}
+			// 	} else{
+			// 	if(velocX>0) {
+			// 		if(velocY>0) { //derecha abajo
+			// 			direction=0.25*Math.PI;
+			// 			g2d.rotate(direction,centroX,centroY);
+			// 			for (int i=velocX;i>0;i--) {
+			// 				g.drawRect(x-i, y, ancho, alto);
+			// 			}
+			// 			g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 			g.drawImage(img, x, y, ancho, alto, null);
+			// 			g2d.rotate(-direction,centroX,centroY);
+			// 		} else { //derecha arriba
+			// 			direction=1.75*Math.PI;
+			// 			g2d.rotate(direction,centroX,centroY);
+			// 			for (int i=velocX;i>0;i--) {
+			// 				g.drawRect(x-i, y, ancho, alto);
+			// 			}
+			// 			g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 			g.drawImage(img, x, y, ancho, alto, null);
+			// 			g2d.rotate(-direction,centroX,centroY);
+			// 		}
+			// 	} else
+			// 	if(velocX<0) { //izquierda abajo
+			// 		if(velocY>0) {
+			// 			direction=0.75*Math.PI;
+			// 			g2d.rotate(direction,centroX,centroY);
+			// 			for (int i=velocX;i<0;i++) {
+			// 				g.drawRect(x+i, y, ancho, alto);
+			// 			}
+			// 			g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 			g.drawImage(img, x, y, ancho, alto, null);
+			// 			g2d.rotate(-direction,centroX,centroY);
+			// 		} else { //izquierda arriba
+			// 			direction=1.25*Math.PI;
+			// 			g2d.rotate(direction,centroX,centroY);
+			// 			for (int i=velocX;i<0;i++) {
+			// 				g.drawRect(x+i, y, ancho, alto);
+			// 			}
+			// 			g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			// 			g.drawImage(img, x, y, ancho, alto, null);
+			// 			g2d.rotate(-direction,centroX,centroY);
+			// 		}
+			// 	}
+			// }
+
+			
+			g2d.rotate(direccion.getAngle(),centroX,centroY); //rotate (ángulo, valor X del eje de rot,valor y de eje de rot)
+			g.drawImage(img2, x+ancho/2, y+alto/4, (ancho*5)/6, (alto*2)/3, null);
+			g.drawImage(img, x, y, ancho, alto, null);
+			g2d.rotate(-direccion.getAngle(),centroX,centroY);
+
 			g.setColor(Color.white);
 			g.fillRect(x, y-5, ancho*shotTimer/160, 5);
 			//Color Jugadores
@@ -200,7 +206,7 @@ public class Tank extends GameObject{
 				if(o.getBounds().intersects(getBounds()) && id!=o.getId()) {
 					x=x-velocX;
 					y=y-velocY;
-					sp33d=0;
+					velocidadNeta=0;
 				}
 			}
 		}
@@ -220,11 +226,11 @@ public class Tank extends GameObject{
 	}
 
 	public int getSp33d() {
-		return sp33d;
+		return velocidadNeta;
 	}
 
-	public void setSp33d(int sp33d) {
-		this.sp33d = sp33d;
+	public void setSp33d(int velocidadNeta) {
+		this.velocidadNeta = velocidadNeta;
 	}
 
 	public double getRotatSpeed() {

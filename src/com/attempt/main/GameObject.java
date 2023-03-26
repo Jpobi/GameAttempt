@@ -8,6 +8,12 @@ public abstract class GameObject {
 	protected int velocX,velocY;
 	protected ID id;
 	protected int ancho,alto;
+	protected Vector2D direccion;
+	// protected Vector2D direccionApuntado;
+	protected double direction;
+	protected double rotatSpeed;
+	protected int velocidadNeta;
+	protected Handler handler;
 	
 	
 	protected GameObject(int x,int y,ID id,int ancho, int alto) {
@@ -16,6 +22,8 @@ public abstract class GameObject {
 		this.id=id;
 		this.ancho=ancho;
 		this.alto=alto;
+		this.direccion=new Vector2D(0,1);
+		this.direccion.normalize();
 	}
 	public abstract void tick();
 	public abstract void render(Graphics g);
