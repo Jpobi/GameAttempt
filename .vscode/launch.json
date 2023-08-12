@@ -4,18 +4,30 @@
     // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
+
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "com.attempt.main.Game",
+            "projectName": "GameAttempt_5b63784e",
+            // "classpath": "${workspaceFolder}/bin" 
+        },
         {
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "${file}",
+            // "classpath": "${workspaceFolder}/bin" 
         },
         {
             "type": "java",
             "name": "Launch Game",
             "request": "launch",
             "mainClass": "com.attempt.main.Game",
-            "projectName": "GameAttempt"
+            "projectName": "GameAttempt",
+            // "classpath": "${workspaceFolder}/bin" 
         }
     ]
 }

@@ -1,8 +1,12 @@
 {
+    // "java.project.sourcePaths": ["${workspaceFolder}/bin"],
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
-    }
+    },
+    "java.project.sourcePaths": [
+        "src/com/attempt/main"
+    ]
 }
